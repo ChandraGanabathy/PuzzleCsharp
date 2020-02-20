@@ -1,0 +1,35 @@
+void Main()
+{
+	var o = new SimpleMultiFundSelectionViewModel();
+	o.FundSelectionExecute();
+}
+public class SimpleMultiFundSelectionViewModel:FundselectionDateView
+{
+	public override void OnFundSelectionExecute()
+	{
+		Console.WriteLine("I am running in Fund Selection derived class");
+	}
+}
+
+public abstract class FundselectionDateView
+{
+	public abstract void OnFundSelectionExecute();
+	
+	public async System.Threading.Tasks.Task FundSelectionExecute()
+	{
+		await System.Threading.Tasks.Task.Run (
+			() => OnFundSelectionExecute());
+	}
+}
+
+
+ private T Clone<T>(T source)
+        {
+            var serializer = new DataContractSerializer(typeof(T), null, int.MaxValue, false, true, null);
+            using (var ms = new System.IO.MemoryStream())
+            {
+                serializer.WriteObject(ms, source);
+                ms.Position = 0;
+                return (T)serializer.ReadObject(ms);
+            }
+        }
